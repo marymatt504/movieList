@@ -8,29 +8,29 @@ class App extends React.Component {
 
     this.state = {
       videos: exampleVideoData
-    }
+    };
   }
   render () {
     return (
       <div>
-      <nav className="navbar">
-        <div className="col-md-6 offset-md-3">
-          <div><h5><em>search</em> view goes here</h5></div>
-        </div>
-      </nav>
-      <div className="row">
-        <div className="col-md-7">
-          <div><h5><em>videoPlayer</em> view goes here</h5></div>
-        </div>
-        <div className="col-md-5">
-          <div>
-            <h5><em>videoList</em> view goes here</h5>
-            <VideoList videos={this.state.videos} />
+        <nav className="navbar">
+          <div className="col-md-6 offset-md-3">
+            <div><h5><em>search</em> view goes here</h5></div>
+          </div>
+        </nav>
+        <div className="row">
+          <div className="col-md-7">
+            <div><h5><em>videoPlayer</em> view goes here</h5></div>
+          </div>
+          <div className="col-md-5">
+            <div>
+              <h5><em>videoList</em> view goes here</h5>
+              <VideoList videos={this.state.videos} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    )
+    );
   }
 
 }
