@@ -1,5 +1,6 @@
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoList from './VideoList.js';
+import VideoPlayer from './VideoPlayer.js';
 
 class App extends React.Component {
 
@@ -7,9 +8,29 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      videos: exampleVideoData
+      videos: exampleVideoData,
+      video: exampleVideoData[0],
     };
   }
+
+  changePlayer(event) {
+    var title = event.target.innerHTML
+    let vid;
+    for (var i = 0; i < this.state.videos.length; i++) {
+      let vi = this.state.videos[i];
+      // debugger;
+      console.log(vi.snippet.title);
+      console.log(title);
+      if (vi.snippet.title === title) {
+        vid = vi;
+        break;
+      }
+    }
+    this.setState({
+      video: vid 
+    })
+  }
+
   render () {
     return (
       <div>
@@ -20,12 +41,14 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <div><h5><em>videoPlayer</em> view goes here</h5></div>
+            <div><h5><em>videoPlayer</em></h5>
+            <VideoPlayer video={this.state.video} videoId={this.state.videoId} title={this.state.title} description={this.state.description}/>
+            </div>
           </div>
           <div className="col-md-5">
             <div>
-              <h5><em>videoList</em> view goes here</h5>
-              <VideoList videos={this.state.videos} />
+              <h5><em>Check out our videos!</em></h5>
+              <VideoList videos={this.state.videos} changeplay={this.changePlayer.bind(this)}/>
             </div>
           </div>
         </div>
