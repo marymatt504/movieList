@@ -1,6 +1,7 @@
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
+import YOUTUBE_API_KEY from '../config/youtube.js';
 
 class App extends React.Component {
 
@@ -10,7 +11,20 @@ class App extends React.Component {
     this.state = {
       videos: exampleVideoData,
       video: exampleVideoData[0],
+      query: 'JazzFestNewOrleans',
+      key: YOUTUBE_API_KEY,
+      max: 5
     };
+  }
+
+  componentDidMount() {
+    this.props.searchYouTube({query: this.state.query, key: this.state.key, max: this.state.max}, (data) => {
+      this.setState({
+        videos: data,
+        video: data[0]
+      });
+    });
+
   }
 
   changePlayer(event) {
