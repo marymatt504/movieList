@@ -14,7 +14,7 @@ class App extends React.Component {
   }
 
   changePlayer(event) {
-    var title = event.target.innerHTML
+    var title = event.target.innerHTML;
     let vid;
     for (var i = 0; i < this.state.videos.length; i++) {
       let vi = this.state.videos[i];
@@ -28,7 +28,7 @@ class App extends React.Component {
     }
     this.setState({
       video: vid 
-    })
+    });
   }
 
   render () {
@@ -42,7 +42,7 @@ class App extends React.Component {
         <div className="row">
           <div className="col-md-7">
             <div><h5><em>videoPlayer</em></h5>
-            <VideoPlayer video={this.state.video} videoId={this.state.videoId} title={this.state.title} description={this.state.description}/>
+              <VideoPlayer video={this.state.video} videoId={this.state.videoId} title={this.state.title} description={this.state.description}/>
             </div>
           </div>
           <div className="col-md-5">
