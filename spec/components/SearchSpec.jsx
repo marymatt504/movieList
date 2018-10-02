@@ -10,7 +10,7 @@ describe ('Search', function() {
 
   var app, searchYouTubeStub;
   
-  xdescribe('when rendering live data from YouTube', function() {
+  describe('when rendering live data from YouTube', function() {
     beforeEach(function() {
       searchYouTubeStub = sinon.stub();
       searchYouTubeStub.onCall(0).yields(window.fakeVideoData);
@@ -29,6 +29,7 @@ describe ('Search', function() {
     });
     
     it('should update the video list when typing into the input box', function() {
+      debugger;
       var videoEntryTitleElements = scryRenderedDOMComponentsWithClass(app, 'video-list-entry-title');
       videoEntryTitleElements.forEach((videoEntryTitle, i) => {
         expect(videoEntryTitle.innerHTML).to.equal(fakeVideoData[i].snippet.title);
