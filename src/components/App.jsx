@@ -23,7 +23,8 @@ class App extends React.Component {
       viewCount: '0',
       likeCount: '0',
       dislikeCount: '0',
-      favoriteCount: '0'
+      favoriteCount: '0',
+      autoPlay: false 
     };
   }
 
@@ -69,9 +70,9 @@ class App extends React.Component {
         favoriteCount: data.items[0].statistics.favoriteCount
       });
     });
-    // this.setState({
-    //   video: vid 
-    // });
+    this.setState({
+      video: vid 
+    });
   }
 
   updateTerms(event) {
@@ -137,14 +138,14 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <div><h5><em>videoPlayer</em></h5>
+            <div className='appBackgrounds'><h5><em>videoPlayer</em></h5>
               <VideoPlayer video={this.state.video} videoId={this.state.videoId} title={this.state.title} description={this.state.description}/>
               <VideoDetails duration={this.state.duration} viewCount={this.state.viewCount} likeCount={this.state.likeCount} dislikeCount={this.state.dislikeCount} favoriteCount={this.state.favoriteCount}/>
             </div>
           </div>
           <div className="col-md-5">
             <div>
-              <h5><em>Check out our videos!</em></h5>
+              <h5 className='appBackgrounds'><em>Check out our videos!</em></h5>
               <VideoList videos={this.state.videos} changeplay={this.changePlayer.bind(this)}/>
             </div>
           </div>

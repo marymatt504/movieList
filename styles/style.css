@@ -39,6 +39,7 @@ body {
 
 .video-player {
   margin-left: 20px;
+  background: white;
 }
 
 .video-player-details {
@@ -102,4 +103,8 @@ h5 {
 
 .descriptor {
   padding: 10px;
+}
+
+.appBackgrounds {
+  background: white;
 }
