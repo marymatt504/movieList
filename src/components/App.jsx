@@ -3,6 +3,8 @@ import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
 import YOUTUBE_API_KEY from '../config/youtube.js';
 import Search from './Search.js';
+import getVideo from '../lib/getVideo.js';
+import VideoDetails from './videoDescription.js';
 
 class App extends React.Component {
 
@@ -16,7 +18,12 @@ class App extends React.Component {
       key: YOUTUBE_API_KEY,
       max: 5,
       searchTerms: 'Search Here',
-      searchInvoked: false
+      searchInvoked: false,
+      duration: 'Not set.',
+      viewCount: '0',
+      likeCount: '0',
+      dislikeCount: '0',
+      favoriteCount: '0'
     };
   }
 
@@ -27,7 +34,15 @@ class App extends React.Component {
         video: data[0]
       });
     });
-
+    getVideo({id: this.state.video.id.videoId, key: this.state.key}, (data) => {
+      this.setState({
+        duration: data.items[0].contentDetails.duration,
+        viewCount: data.items[0].statistics.viewCount,
+        likeCount: data.items[0].statistics.likeCount,
+        dislikeCount: data.items[0].statistics.dislikeCount,
+        favoriteCount: data.items[0].statistics.favoriteCount
+      });
+    });
   }
 
   changePlayer(event) {
@@ -43,9 +58,20 @@ class App extends React.Component {
         break;
       }
     }
-    this.setState({
-      video: vid 
+
+    getVideo({id: vid.id.videoId, key: this.state.key}, (data) => {
+      this.setState({
+        video: vid,
+        duration: data.items[0].contentDetails.duration,
+        viewCount: data.items[0].statistics.viewCount,
+        likeCount: data.items[0].statistics.likeCount,
+        dislikeCount: data.items[0].statistics.dislikeCount,
+        favoriteCount: data.items[0].statistics.favoriteCount
+      });
     });
+    // this.setState({
+    //   video: vid 
+    // });
   }
 
   updateTerms(event) {
@@ -56,21 +82,39 @@ class App extends React.Component {
 
     // var debouncedSearchYouTube = _.debounce(this.props.searchYouTube, 500);
     if (this.state.searchInvoked === false) {
-        this.props.searchYouTube({query: this.state.searchTerms, key: this.state.key, max: this.state.max}, (data) => {
+      this.props.searchYouTube({query: this.state.searchTerms, key: this.state.key, max: this.state.max}, (data) => {
         this.setState({
           videos: data,
           video: data[0],
           searchInvoked: true
         });
-      })
-    } else {
-    setTimeout( () => this.props.searchYouTube({query: this.state.searchTerms, key: this.state.key, max: this.state.max}, (data) => {
-      this.setState({
-        videos: data,
-        video: data[0],
-        searchInvoked: false
       });
-    }), 500);
+      getVideo({id: this.state.video.id.videoId, key: this.state.key}, (data) => {
+        this.setState({
+          duration: data.items[0].contentDetails.duration,
+          viewCount: data.items[0].statistics.viewCount,
+          likeCount: data.items[0].statistics.likeCount,
+          dislikeCount: data.items[0].statistics.dislikeCount,
+          favoriteCount: data.items[0].statistics.favoriteCount
+        });
+      });
+    } else {
+      setTimeout( () => this.props.searchYouTube({query: this.state.searchTerms, key: this.state.key, max: this.state.max}, (data) => {
+        this.setState({
+          videos: data,
+          video: data[0],
+          searchInvoked: false
+        });
+      }), 500);
+      setTimeout( () => getVideo({id: this.state.video.id.videoId, key: this.state.key}, (data) => {
+        this.setState({
+          duration: data.items[0].contentDetails.duration,
+          viewCount: data.items[0].statistics.viewCount,
+          likeCount: data.items[0].statistics.likeCount,
+          dislikeCount: data.items[0].statistics.dislikeCount,
+          favoriteCount: data.items[0].statistics.favoriteCount
+        });
+      }), 0);
     }
 
   }
@@ -79,7 +123,7 @@ class App extends React.Component {
     this.setState({
       searchTerms: 'Search Here',
       query: 'JazzFestNewOrleans2018'
-    })
+    });
   }
 
 
@@ -95,6 +139,7 @@ class App extends React.Component {
           <div className="col-md-7">
             <div><h5><em>videoPlayer</em></h5>
               <VideoPlayer video={this.state.video} videoId={this.state.videoId} title={this.state.title} description={this.state.description}/>
+              <VideoDetails duration={this.state.duration} viewCount={this.state.viewCount} likeCount={this.state.likeCount} dislikeCount={this.state.dislikeCount} favoriteCount={this.state.favoriteCount}/>
             </div>
           </div>
           <div className="col-md-5">
