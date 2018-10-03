@@ -51,7 +51,6 @@ describe ('VideoPlayer', function() {
     var cuteCatVideoTitleElement = findRenderedDOMComponentWithClass(cuteCatVideo, 'video-player-details');
     var superCuteCatVideoTitleElement = findRenderedDOMComponentWithClass(superCuteCatVideo, 'video-player-details');
     var hackReactorVideoTitleElement = findRenderedDOMComponentWithClass(hackReactorVideo, 'video-player-details');
-
     expect(cuteCatVideoTitleElement.children[0].innerHTML).to.equal('Cute cat video');
     expect(superCuteCatVideoTitleElement.children[0].innerHTML).to.equal('Super cute cat video');
     expect(hackReactorVideoTitleElement.children[0].innerHTML).to.equal('Hack Reactor opens extension school on Mars');

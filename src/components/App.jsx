@@ -47,14 +47,17 @@ class App extends React.Component {
   }
 
   changePlayer(event) {
-    var title = event.target.innerHTML;
+    var title = event.target.innerText.split(" ").join("");
     let vid;
     for (var i = 0; i < this.state.videos.length; i++) {
       let vi = this.state.videos[i];
       // debugger;
-      console.log(vi.snippet.title);
-      console.log(title);
-      if (vi.snippet.title === title) {
+      // console.log(vi.snippet.title);
+      var viTitle = vi.snippet.title.split(" ").join("");
+      // console.log(viTitle);
+      // console.log(this.state.videos[i]);
+      // console.log(title);
+      if (viTitle === title) {
         vid = vi;
         break;
       }
@@ -75,6 +78,12 @@ class App extends React.Component {
     });
   }
 
+  updateAutoPlay() {
+    this.setState({
+      autoPlay: !this.state.autoPlay 
+    });
+  }
+  
   updateTerms(event) {
     var inputTerms = event.target.value;
     this.setState({
@@ -139,7 +148,7 @@ class App extends React.Component {
         <div className="row">
           <div className="col-md-7">
             <div className='appBackgrounds'><h5><em>videoPlayer</em></h5>
-              <VideoPlayer video={this.state.video} videoId={this.state.videoId} title={this.state.title} description={this.state.description}/>
+              <VideoPlayer updateAutoPlay= {this.updateAutoPlay.bind(this)} video={this.state.video} videoId={this.state.videoId} title={this.state.title} description={this.state.description} autoplay={this.state.autoPlay}/>
               <VideoDetails duration={this.state.duration} viewCount={this.state.viewCount} likeCount={this.state.likeCount} dislikeCount={this.state.dislikeCount} favoriteCount={this.state.favoriteCount}/>
             </div>
           </div>
